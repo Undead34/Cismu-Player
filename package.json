@@ -1,0 +1,25 @@
+{
+  "name": "cismu-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Gabriel Maizo <maizogabriel@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.41",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "electron": "^19.0.4",
+    "ffmpeg": "0.0.4",
+    "get-mp3-duration": "^1.0.0",
+    "jsmediatags": "^3.9.7",
+    "mp3tag.js": "^3.3.0",
+    "sqlite3": "^5.0.8"
+  }
+}

@@ -1,0 +1,185 @@
+@font-face {
+  font-family: 'cismu-player';
+  src:
+    url('fonts/cismu-player.ttf?nl5gbr') format('truetype'),
+    url('fonts/cismu-player.woff?nl5gbr') format('woff'),
+    url('fonts/cismu-player.svg?nl5gbr#cismu-player') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.cismu {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'cismu-player' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.player-backward-fast:before {
+  content: "\e900";
+}
+.player-backward:before {
+  content: "\e901";
+}
+.player-backward-step:before {
+  content: "\e902";
+}
+.player-forward-step:before {
+  content: "\e903";
+}
+.player-forward:before {
+  content: "\e904";
+}
+.player-forward-fast:before {
+  content: "\e905";
+}
+.player-arrows-repeat:before {
+  content: "\e906";
+}
+.player-arrows-repeat-1:before {
+  content: "\e907";
+}
+.player-repeat:before {
+  content: "\e908";
+}
+.player-repeat-1:before {
+  content: "\e909";
+}
+.player-shuffle:before {
+  content: "\e90a";
+}
+.player-volume-off:before {
+  content: "\e90b";
+}
+.player-volume-xmark:before {
+  content: "\e90c";
+}
+.player-volume-slash:before {
+  content: "\e90d";
+}
+.player-volume-low:before {
+  content: "\e90e";
+}
+.player-volume:before {
+  content: "\e90f";
+}
+.player-volume-high:before {
+  content: "\e910";
+}
+.player-music-note:before {
+  content: "\e911";
+}
+.player-music-note-slash:before {
+  content: "\e912";
+}
+.player-music-slash:before {
+  content: "\e913";
+}
+.player-music:before {
+  content: "\e914";
+}
+.player-stop:before {
+  content: "\e915";
+}
+.player-play:before {
+  content: "\e916";
+}
+.player-pause:before {
+  content: "\e917";
+}
+.player-play-pause:before {
+  content: "\e918";
+}
+.player-circle-play:before {
+  content: "\e919";
+}
+.player-circle-pause:before {
+  content: "\e91a";
+}
+.player-circle-waveform-lines:before {
+  content: "\e91b";
+}
+.player-expand:before {
+  content: "\e91c";
+}
+.player-expand-wide:before {
+  content: "\e91d";
+}
+.player-file-audio:before {
+  content: "\e91e";
+}
+.player-file-music:before {
+  content: "\e91f";
+}
+.player-file-waveform:before {
+  content: "\e920";
+}
+.player-folder-music:before {
+  content: "\e921";
+}
+.player-list-music-2:before {
+  content: "\e922";
+}
+.player-list-music:before {
+  content: "\e923";
+}
+.player-tv-music:before {
+  content: "\e924";
+}
+.player-clapperboard-play:before {
+  content: "\e925";
+}
+.player-mp3-player:before {
+  content: "\e926";
+}
+.player-photo-film-music:before {
+  content: "\e927";
+}
+.player-monitor-waveform:before {
+  content: "\e928";
+}
+.player-user-music:before {
+  content: "\e929";
+}
+.player-sliders:before {
+  content: "\e92a";
+}
+.player-sliders-up:before {
+  content: "\e92b";
+}
+.player-sliders-simple:before {
+  content: "\e92c";
+}
+.player-square-sliders:before {
+  content: "\e92d";
+}
+.player-square-sliders-vertical:before {
+  content: "\e92e";
+}
+.player-waveform:before {
+  content: "\e92f";
+}
+.player-waveform-lines:before {
+  content: "\e930";
+}
+.player-minimize:before {
+  content: "\e931";
+}
+.player-maximize:before {
+  content: "\e932";
+}
+.player-restore:before {
+  content: "\e933";
+}
+.player-close:before {
+  content: "\e934";
+}

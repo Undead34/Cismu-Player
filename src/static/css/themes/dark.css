@@ -1,0 +1,87 @@
+* {
+  color: #ffffff;
+}
+
+body {
+  border: 1px solid #191920;
+}
+
+.Header {
+  background-color: #2c2c2c;
+}
+
+.App .App-item.App-playlist {
+  background-color: #3e3e3e;
+  border: 1px solid #252525;
+}
+
+.App .App-item.App-multimedia {
+  background-color: #343434;
+}
+
+.App .App-item.App-controls {
+  background-color: #3e3e3e;
+  border-top: 1px solid #1f1f1f;
+}
+
+.Header .Header-windowControls .Header-button {
+  cursor: pointer;
+}
+
+.Header .Header-windowControls .Header-button-Minimize:hover {
+  background-color: #3e3e3e;
+}
+
+.Header .Header-windowControls .Header-button-Maximize:hover {
+  background-color: #3e3e3e;
+}
+
+.Header .Header-windowControls .Header-button-Close {
+  width: 22px;
+  height: 22px;
+  background-color: #e85725;
+}
+
+.Header .Header-windowControls .Header-button-Close:hover {
+  background-color: #f06532;
+  font-weight: bold;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: auto;
+  height: 2px;
+  background: #3e3e3e;
+  border: 1px solid #252525;
+  border-top: 2px solid #2c2c2c;
+  border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background: #3a3a3a;
+  border: 1px solid #252525;
+}
+
+.App-item.App-controls .App-control > button{
+  background: #3e3e3e;
+  border: 1px solid #252525;
+  cursor: pointer;
+  font-size: .8em;
+}
+
+.App-item.App-controls .App-control > button:hover {
+  background: #3a3a3a;
+}
+
+.App-playlist-item {
+  padding: 5px;
+}
+
+.App-playlist-item:hover {
+  background: #5a5a5a;
+}
+

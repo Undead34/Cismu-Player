@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cismu Player</title>
+
+  <link rel="stylesheet" type="text/css" href="../static/libs/Semantic-UI/semantic.min.css" />
+  <link rel="stylesheet" type="text/css" href="../static/libs/Semantic-UI/components/dropdown.min.css" />
+</head>
+
+<body>
+
+  <div class="ui left vertical menu sidebar">
+    <a class="item">
+      <i class="setting icon"></i>
+      Settings
+    </a>
+  </div>
+
+  <div class="pusher">
+    <!-- Site content !-->
+
+    <div class="ui top attached menu borderless" style="-webkit-app-region: drag">
+      <div class="menu">
+        <div class="item">
+          <svg class="logo-menu" style="cursor: pointer;-webkit-app-region: no-drag;" xmlns="http://www.w3.org/2000/svg" width="32px" height="32px"
+            viewBox="0 0  256 256" version="1.1">
+            <style xmlns="http://www.w3.org/2000/svg">
+              .c01 {
+                fill: #4183c4;
+              }
+
+              .c02 {
+                fill: #0075ff;
+              }
+
+              .c03 {
+                fill: #757576;
+              }
+
+              .c04 {
+                fill: #006ff3;
+              }
+            </style>
+            <g id="#000000ff">
+              <path class="c01" fill="#000000" opacity="1.00"
+                d=" M 83.69 20.67 C 114.71 13.94 147.85 18.83 176.27 32.71 C 170.85 46.22 165.68 59.83 160.30 73.35 C 150.36 69.19 140.38 64.98 129.96 62.16 C 116.88 59.12 102.26 58.45 90.10 65.04 C 80.41 70.19 73.54 79.40 69.37 89.37 C 63.78 102.81 62.31 117.58 62.64 132.02 C 63.08 148.87 65.72 166.92 76.58 180.46 C 84.33 190.22 96.90 194.81 109.06 195.34 C 129.35 196.63 148.88 189.83 167.74 183.20 C 167.75 197.60 167.76 212.01 167.73 226.41 C 151.41 233.42 133.73 236.99 116.00 237.47 C 100.49 238.44 84.68 237.09 69.86 232.23 C 52.03 226.48 36.88 213.81 26.87 198.12 C 16.43 180.71 11.81 160.40 10.53 140.30 C 9.07 115.32 11.96 89.29 23.86 66.93 C 35.70 43.71 58.18 26.21 83.69 20.67 Z" />
+              <path class="c02" fill="#000000" opacity="1.00"
+                d=" M 156.50 87.50 C 169.17 87.49 181.83 87.50 194.50 87.50 C 194.51 117.50 194.51 147.50 194.50 177.50 C 181.83 177.51 169.17 177.51 156.50 177.50 C 156.49 147.50 156.49 117.50 156.50 87.50 Z" />
+              <path class="c03" fill="#000000" opacity="1.00"
+                d=" M 201.50 104.50 C 215.17 104.50 228.83 104.49 242.50 104.50 C 242.51 128.17 242.51 151.83 242.50 175.50 C 228.83 175.51 215.17 175.51 201.50 175.50 C 201.50 151.83 201.49 128.17 201.50 104.50 Z" />
+              <path class="c04" fill="#000000" opacity="1.00"
+                d=" M 101.50 118.50 C 115.83 118.49 130.16 118.50 144.50 118.50 C 144.51 138.50 144.50 158.50 144.50 178.50 C 130.17 178.51 115.83 178.51 101.50 178.50 C 101.49 158.50 101.50 138.50 101.50 118.50 Z" />
+            </g>
+          </svg>
+        </div>
+        <div class="item" style="padding: 0;-webkit-app-region: no-drag;">
+          <h3>Cismu Player</h3>
+        </div>
+      </div>
+      <div class="menu" style="-webkit-app-region: no-drag;">
+        <div class="ui category search item">
+          <div class="ui transparent icon input">
+            <input class="prompt" type="text" placeholder="Search music..." />
+            <i class="search link icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+
+      <div class="menu right" style="-webkit-app-region: no-drag;">
+        <i class="window minimize outline icon"></i>
+        <i class="window maximize outline icon"></i>
+        <i class="window close outline icon"></i>
+      </div>
+    </div>
+
+    <button id="update-local-list">UPDATE LIST</button>
+
+    <div id="audio-view-container"></div>
+
+    <div class="scrollable" style="height: 28vh;overflow-y: auto;">
+      <table id="local-list-sounds" class="ui celled table" style="overflow-y: auto;">
+        <thead>
+          <tr>
+            <th>Num</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <div class="ui segment" style="position: fixed; bottom: 0%; width: 100%; height: 100px; margin: 0">
+      <div class="ui grid center aligned" style="width: 100%;">
+        <audio id="audio-player" style="display: none"></audio>
+        <div class="ui labeled input" style="width: 100%">
+          <span id="playing-time-span" class="ui right label"
+            style="display: inline-block; background: transparent;"></span>
+          <input id="time-track-slider" type="range" class="ui right labeled input column" value="0" min="0"
+            style="padding:0;" />
+          <span id="song-length-span" class="ui left label"
+            style="display: inline-block; background: transparent;"></span>
+        </div>
+
+        <button class="ui button column"><i class="random icon"></i></button>
+        <button class="ui button column"><i class="backward icon"></i></button>
+        <button id="play-pause-btn" class="ui button column"><i class="play icon"></i></button>
+        <button class="ui button column"><i class="forward icon"></i></button>
+        <button class="ui button column"><i class="retweet icon"></i></button>
+        <input id="volume-control-input" type="range" value="100" min="0" max="100" style="padding:0;" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIBRARIES -->
+  <script src="../static/libs/jquery/jquery-3.6.0.min.js"></script>
+  <script src="../static/libs/Semantic-UI/semantic.min.js"></script>
+  <script src="../static/libs/Semantic-UI/components/dropdown.min.js"></script>
+
+  <!-- SCRIPTS -->
+  <script src="../static/js/reproduction.js"></script>
+  <script src="../static/js/controls.js"></script>
+  <script src="../static/js/audioView.js" type="module"></script>
+
+  <script>
+    $(".ui.dropdown").dropdown();
+    $(".logo-menu").on("click", function () {
+      $('.ui.left.vertical.menu.sidebar').sidebar("toggle");
+    });
+  </script>
+
+  <script>
+    window.api.invoke("get-local-sounds", null).then((musics) => {
+      let table = document.getElementById("local-list-sounds");
+      let tbody = table.children.item(1);
+      for (music in musics) {
+        let tr = document.createElement("tr");
+        let tdNum = document.createElement("td");
+        let tdName = document.createElement("td");
+
+        tdNum.innerHTML =  musics[music].num;
+
+
+        let a = document.createElement("a");
+        a.innerHTML = musics[music].name;
+        a.href = "?music=" + musics[music].id;
+        a.id = musics[music].id;
+        a.className = "track-playable";
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          playSound(e.target.id);
+        });
+
+        tdName.appendChild(a);
+
+        tr.appendChild(tdNum);
+        tr.appendChild(tdName);
+
+        tbody.appendChild(tr);
+      }
+    });
+
+    let btnUpdate = document.getElementById("update-local-list");
+
+    btnUpdate.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      window.api.invoke("upd-local-sounds", null).then((musics) => {
+        let table = document.getElementById("local-list-sounds");
+        let tbody = table.children.item(1);
+        tbody.innerHTML = "";
+        for (music in musics) {
+          let tr = document.createElement("tr");
+          let tdNum = document.createElement("td");
+          let tdName = document.createElement("td");
+
+          tdNum.innerHTML =  musics[music].num;
+
+          let a = document.createElement("a");
+          a.innerHTML = musics[music].name;
+          a.href = "?music=" + musics[music].id;
+          a.id = musics[music].id;
+          a.className = "track-playable";
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            playSound(e.target.id);
+          });
+
+          tdName.appendChild(a);
+
+          tr.appendChild(tdNum);
+          tr.appendChild(tdName);
+
+          tbody.appendChild(tr);
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
