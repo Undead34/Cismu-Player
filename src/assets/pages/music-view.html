@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/libs/Semantic-UI/semantic.min.css">
+  <link rel="stylesheet" href="../static/css/general.css">
+  <title>Cismu Player</title>
+</head>
+
+<body>
+  <div class="app" style="
+  position: relative;
+  width: 100%;
+  height: 100%;
+">
+
+    <div id="audio-view-container" class="container" style="width: 100%; height: 60vh;">
+      <button style="position: absolute;"><i class="reply icon"></i> Back</button>
+    </div>
+
+    <div id="controls-container" class="ui segment" style="margin-top: 15px;">
+      <div class="ui equal wide grid">
+        <input id="time-music-slider" style="width: 100%;padding: 0;" type="range" min="0" value="0">
+        <div class="column five wide">
+          <div class="ui items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img id="image-cover" src="../static/images/logo.png">
+              </div>
+              <div class="content">
+                <a class="header" id="music-title"></a>
+                <div class="meta">
+                  <span id="music-artist"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column five wide center aligned">
+          <button class="circular ui icon button" id=""><i class="random icon"></i></button>
+          <button class="circular ui icon button" id=""><i class="step backward icon"></i></button>
+          <button class="circular ui icon button" id="play-stop-music"><i class="play circle outline icon"></i></button>
+          <button class="circular ui icon button"><i class="step forward icon"></i></button>
+          <button class="circular ui icon button"><i class="retweet icon"></i></button>
+        </div>
+        <div class="column four wide right aligned">
+          <div class="ui">
+            <div class="ui transparent left icon input" style="padding: 0px; margin: 0px;">
+              <i id="volume-control-ico" class="volume up icon"></i>
+              <input id="volume-control" type="range" min="0" max="100" value="100" step="0.01" style="padding: 0px !important;margin-left: 20px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <audio id="audio-player" style="display: none;"></audio>
+    </div>
+
+    <div style="max-height: 424px;" id="music-container" class="ui sidebar bottom grid items segment">
+      <div class="row centered" style="margin: 0;padding: 0;"> <button> <i class="angle down icon"></i> </button> </div>
+    </div>
+
+    <center>
+      <div class="pusher" style="position: absolute;bottom: 0; left: calc(50vw - 36px);">
+        <button id="sidebar-music"><i class="angle up icon"></i></button>
+      </div>
+    </center>
+  </div>
+
+  <script src="../static/libs/jquery/jquery-3.6.0.min.js"></script>
+  <script src="../static/libs/Semantic-UI/semantic.min.js"></script>
+  <script src="../static/js/UI.js" type="module"></script>
+</body>
+
+</html>
