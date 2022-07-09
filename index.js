@@ -4,27 +4,27 @@
 
 const { app, BrowserWindow } = require('electron');
 const errorHandler = require('./src/app/modules/errorHandler');
-const appSettings = require('./src/app/modules/appSettings');
+// const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
-const paths = require('./src/app/common/paths');
+// const paths = require('./src/app/common/paths');
 const path = require("path")
 
 const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
 
-appSettings.init();
 errorHandler.init();
-paths.init(constants.buildInfo);
+// appSettings.init();
+// paths.init(constants.buildInfo);
 
 
-global.releaseChannel = constants.buildInfo.releaseChannel;
-global.moduleDataPath = paths.getModuleDataPath();
+// global.releaseChannel = constants.buildInfo.releaseChannel;
+// global.moduleDataPath = paths.getModuleDataPath();
 
-const settings = appSettings.getSettings();
+// const settings = appSettings.getSettings();
 
-if (!settings.get('enableHardwareAcceleration', true)) {
-    app.disableHardwareAcceleration();
-}
+// if (!settings.get('enableHardwareAcceleration', true)) {
+//     app.disableHardwareAcceleration();
+// }
 
 function startApp() {
     console.log('Starting app.');
@@ -35,7 +35,7 @@ function startApp() {
         frame: true,
         minHeight: 430,
         minWidth: 580,
-        title: "Cismu Player",
+        title: constants.appOptions.appName,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -43,7 +43,10 @@ function startApp() {
             preload: path.join(__dirname, 'preload.js')
         },
     });
-
+    
+    return new Promise((resolve, reason)=>{
+        resolve(a+b)
+    })
     // paths.cleanOldVersions(buildInfo);
 }
 
