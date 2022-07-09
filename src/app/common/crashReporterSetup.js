@@ -8,12 +8,9 @@ exports.isInitialized = isInitialized;
 exports.metadata = void 0;
 
 const electron = require('electron');
-
 const childProcess = require('child_process');
 
-const {
-  flatten
-} = require('./crashReporterUtils');
+const { flatten } = require('./crashReporterUtils');
 
 let initialized = false;
 const metadata = {};

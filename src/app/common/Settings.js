@@ -1,24 +1,16 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _fs = _interopRequireDefault(require("fs"));
-
-var _path = _interopRequireDefault(require("path"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const _fs = require("fs");
+const _path = require("path");
 
 // TODO: sync fs operations could cause slowdown and/or freezes, depending on usage
 //       if this is fine, remove this todo
 class Settings {
   constructor(root) {
-    this.path = _path.default.join(root, 'settings.json');
+    this.path = _path.join(root, 'settings.json');
 
     try {
-      this.lastSaved = _fs.default.readFileSync(this.path);
+      this.lastSaved = _fs.readFileSync(this.path);
       this.settings = JSON.parse(this.lastSaved);
     } catch (e) {
       this.lastSaved = '';
@@ -30,7 +22,7 @@ class Settings {
 
   _lastModified() {
     try {
-      return _fs.default.statSync(this.path).mtime.getTime();
+      return _fs.statSync(this.path).mtime.getTime();
     } catch (e) {
       return 0;
     }
@@ -60,7 +52,7 @@ class Settings {
       if (this.lastSaved != toSave) {
         this.lastSaved = toSave;
 
-        _fs.default.writeFileSync(this.path, toSave);
+        _fs.writeFileSync(this.path, toSave);
 
         this.lastModified = this._lastModified();
       }
@@ -71,5 +63,4 @@ class Settings {
 
 }
 
-exports.default = Settings;
-module.exports = exports.default;
+module.exports = Settings;

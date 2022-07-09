@@ -1,27 +1,10 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.cleanOldVersions = cleanOldVersions;
-exports.init = init;
-exports.getUserData = getUserData;
-exports.getUserDataVersioned = getUserDataVersioned;
-exports.getResources = getResources;
-exports.getModuleDataPath = getModuleDataPath;
-exports.getInstallPath = getInstallPath;
-
-var _fs = _interopRequireDefault(require("fs"));
-
-var _mkdirp = _interopRequireDefault(require("mkdirp"));
-
-var _originalFs = _interopRequireDefault(require("original-fs"));
-
-var _path = _interopRequireDefault(require("path"));
-
-var _rimraf = _interopRequireDefault(require("rimraf"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const _fs = require("fs");
+const _mkdirp = require("mkdirp");
+const _originalFs = require("original-fs");
+const _path = require("path");
+const _rimraf = require("rimraf");
 
 /* eslint-disable no-console */
 // Determines environment-specific paths based on info provided
@@ -32,27 +15,24 @@ let moduleDataPath = null;
 let installPath = null;
 
 function determineAppUserDataRoot() {
-  const {
-    app
-  } = require('electron');
-
+  const { app } = require('electron');
   return app.getPath('appData');
 }
 
 function determineUserData(userDataRoot, buildInfo) {
-  return _path.default.join(userDataRoot, 'discord' + (buildInfo.releaseChannel == 'stable' ? '' : buildInfo.releaseChannel));
+  return _path.join(userDataRoot, 'discord' + (buildInfo.releaseChannel == 'stable' ? '' : buildInfo.releaseChannel));
 } // cleans old version data in the background
 
 
 function cleanOldVersions(buildInfo) {
-  const entries = _fs.default.readdirSync(userDataPath) || [];
+  const entries = _fs.readdirSync(userDataPath) || [];
   entries.forEach(entry => {
-    const fullPath = _path.default.join(userDataPath, entry);
+    const fullPath = _path.join(userDataPath, entry);
 
     let stat;
 
     try {
-      stat = _fs.default.lstatSync(fullPath);
+      stat = _fs.lstatSync(fullPath);
     } catch (e) {
       return;
     }
@@ -71,7 +51,7 @@ function cleanOldVersions(buildInfo) {
 }
 
 function init(buildInfo) {
-  resourcesPath = _path.default.join(require.main.filename, '..', '..', '..');
+  resourcesPath = _path.join(require.main.filename, '..', '..', '..');
   const userDataRoot = determineAppUserDataRoot();
   userDataPath = determineUserData(userDataRoot, buildInfo);
 
@@ -80,22 +60,22 @@ function init(buildInfo) {
   } = require('electron');
 
   app.setPath('userData', userDataPath);
-  userDataVersionedPath = _path.default.join(userDataPath, buildInfo.version);
+  userDataVersionedPath = _path.join(userDataPath, buildInfo.version);
 
-  _mkdirp.default.sync(userDataVersionedPath);
+  _mkdirp.sync(userDataVersionedPath);
 
   if (buildInfo.localModulesRoot != null) {
     moduleDataPath = buildInfo.localModulesRoot;
   } else if (buildInfo.newUpdater) {
-    moduleDataPath = _path.default.join(userDataPath, 'module_data');
+    moduleDataPath = _path.join(userDataPath, 'module_data');
   } else {
-    moduleDataPath = _path.default.join(userDataVersionedPath, 'modules');
+    moduleDataPath = _path.join(userDataVersionedPath, 'modules');
   }
 
-  const exeDir = _path.default.dirname(app.getPath('exe'));
+  const exeDir = _path.dirname(app.getPath('exe'));
 
-  if (/^app-[0-9]+\.[0-9]+\.[0-9]+/.test(_path.default.basename(exeDir))) {
-    installPath = _path.default.join(exeDir, '..');
+  if (/^app-[0-9]+\.[0-9]+\.[0-9]+/.test(_path.basename(exeDir))) {
+    installPath = _path.join(exeDir, '..');
   }
 }
 
@@ -117,4 +97,14 @@ function getModuleDataPath() {
 
 function getInstallPath() {
   return installPath;
+}
+
+module.exports = {
+  getUserData,
+  getUserDataVersioned,
+  getResources,
+  getModuleDataPath,
+  getInstallPath,
+  init,
+  cleanOldVersions
 }

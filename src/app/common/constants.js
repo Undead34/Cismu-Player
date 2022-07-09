@@ -4,7 +4,6 @@ const { app } = require("electron")
 const appOptions = {
   appName: "Cismu Player",
   appNameMachine: "Cismu-Player",
-  appVersion: "0.0.1",
 }
 
 const appPaths = {
@@ -12,8 +11,12 @@ const appPaths = {
   videoPath: app.getPath("videos"),
 }
 
+const buildInfo = {
+  version: "0.0.1"
+}
 
 module.exports = {
   appOptions,
   appPaths,
+  buildInfo
 }
