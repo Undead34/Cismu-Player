@@ -1,6 +1,6 @@
 "use strict";
 
-var _electron = require("electron");
+const electron = require("electron");
 
 const HANDLED_ERROR_LIMIT = 10;
 let totalHandledErrors = 0;
@@ -16,7 +16,7 @@ function init() {
     console.warn(message);
 
     if (!isErrorSafeToSuppress(error)) {
-      _electron.dialog.showErrorBox('A JavaScript error occurred in the main process', message);
+      electron.dialog.showErrorBox('A JavaScript error occurred in the main process', message);
     }
   });
 } // show a similar error message to the error handler, except exit out the app
@@ -30,14 +30,14 @@ function fatal(err) {
     detail: err && err.stack ? err.stack : String(err)
   };
 
-  const callback = _ => _electron.app.quit();
+  const callback = _ => electron.app.quit();
 
   const electronMajor = parseInt(process.versions.electron.split('.')[0]);
 
   if (electronMajor >= 6) {
-    _electron.dialog.showMessageBox(null, options).then(callback);
+    electron.dialog.showMessageBox(null, options).then(callback);
   } else {
-    _electron.dialog.showMessageBox(options, callback);
+    electron.dialog.showMessageBox(options, callback);
   }
 } // capture a handled error for telemetry purposes, e.g. finding update loops.
 

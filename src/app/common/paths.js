@@ -1,21 +1,47 @@
 "use strict";
 
+const { handled } = require("../modules/errorHandler");
+const { appOptions } = require("./constants");
 const { app } = require("electron");
+const path = require("path");
 const fs = require("fs");
-const path = require("path")
 
-const appPaths = {
-  root: app.getPath("appData"),
-  music: app.getPath("music"),
-  videos: app.getPath("videos"),
-  home: app.getPath("home"),
-  app: app.getPath("exe"),
+let root = path.join(app.getPath("appData"), appOptions.appName),
+appData = app.getPath("appData"),
+music = app.getPath("music"),
+videos = app.getPath("videos"),
+home = app.getPath("home"),
+exe = app.getPath("exe")
+
+const _mkdirSync = (paths) => {
+  try {
+    if (typeof paths !== "object") {
+      fs.mkdirSync(paths, { recursive: true });
+      return true;
+    } else {
+      for (let x in paths) {
+        fs.mkdirSync(paths[x], { recursive: true });
+      }
+      return true;
+    }
+  } catch (error) {
+    handled(error);
+  }
 }
 
-function init() {
-  fs.existsSync()
+function init () {
+  let folder = _mkdirSync([root]);
+
 }
 
 module.exports = {
-
+  init,
+  getPath: {
+    root,
+    appData,
+    music,
+    videos,
+    home,
+    exe,
+  }
 }

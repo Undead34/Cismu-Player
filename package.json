@@ -11,11 +11,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.41",
+    "electron": "^19.0.8",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "electron": "^19.0.4",
     "electron-is-dev": "^2.0.0",
     "ffmpeg": "0.0.4",
     "get-mp3-duration": "^1.0.0",

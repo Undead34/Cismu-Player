@@ -1,20 +1,23 @@
 "use strict";
 
-const _fs = require("fs");
-const _path = require("path");
+const fs = require("fs");
+const path = require("path");
 
 // TODO: sync fs operations could cause slowdown and/or freezes, depending on usage
 //       if this is fine, remove this todo
 class Settings {
   constructor(root) {
-    this.path = _path.join(root, 'settings.json');
+    this.path = path.join(root, 'settings.json');
 
     try {
-      this.lastSaved = _fs.readFileSync(this.path);
+      this.lastSaved = fs.readFileSync(this.path);
       this.settings = JSON.parse(this.lastSaved);
     } catch (e) {
       this.lastSaved = '';
-      this.settings = {};
+      this.settings = {
+        "enableHardwareAcceleration": true,
+      };
+      this.save();
     }
 
     this.lastModified = this._lastModified();
@@ -22,7 +25,7 @@ class Settings {
 
   _lastModified() {
     try {
-      return _fs.statSync(this.path).mtime.getTime();
+      return fs.statSync(this.path).mtime.getTime();
     } catch (e) {
       return 0;
     }
@@ -52,7 +55,7 @@ class Settings {
       if (this.lastSaved != toSave) {
         this.lastSaved = toSave;
 
-        _fs.writeFileSync(this.path, toSave);
+        fs.writeFileSync(this.path, toSave);
 
         this.lastModified = this._lastModified();
       }

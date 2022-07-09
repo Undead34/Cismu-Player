@@ -6,64 +6,69 @@ const { app, BrowserWindow } = require('electron');
 const errorHandler = require('./src/app/modules/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
-// const paths = require('./src/app/common/paths');
-const path = require("path")
+const paths = require('./src/app/common/paths');
+const path = require("path");
+
+let mainWindow;
+
+errorHandler.init();
 
 const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
 
-errorHandler.init();
-appSettings.init();
-// paths.init(constants.buildInfo);
+paths.init();
+global.appPaths = paths.getPath;
+appSettings.init(paths.getPath.root);
 
+const settings = appSettings.getSettings();
 
-// global.releaseChannel = constants.buildInfo.releaseChannel;
-// global.moduleDataPath = paths.getModuleDataPath();
-
-// const settings = appSettings.getSettings();
-
-// if (!settings.get('enableHardwareAcceleration', true)) {
-//     app.disableHardwareAcceleration();
-// }
+if (!settings.get('enableHardwareAcceleration', true)) {
+  console.log(`
+##################################################################
+# Hardware acceleration is disabled, this may affect performance #
+##################################################################\n`);
+  app.disableHardwareAcceleration();
+}
 
 function startApp() {
-    console.log('Starting app.');
-    new BrowserWindow({
-        width: 800,
-        height: 600,
-        show: true,
-        frame: true,
-        minHeight: 430,
-        minWidth: 580,
-        title: constants.appOptions.appName,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            enableRemoteModule: false,
-            preload: path.join(__dirname, 'preload.js')
-        },
-    });
+  console.log('Starting app.');
+  
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: true,
+    frame: false,
+    minHeight: 430,
+    minWidth: 580,
+    title: constants.appOptions.appName,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'preload.js')
+    },
+  });
 
-    // paths.cleanOldVersions(buildInfo);
+  mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"))
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {
-    console.log("Jaja")
+  console.log("Jaja")
 });
 
 app.on('will-finish-launching', () => {
-    console.log("Electron is Awesome!!!")
+  console.log("Electron is Awesome!!!")
 });
 
 console.log(`${constants.appOptions.appName} ${app.getVersion()}`);
 
 if (!isFirstInstance) {
-    console.log('Quitting secondary instance.');
-    app.quit();
+  console.log('Quitting secondary instance.');
+  app.quit();
 } else {
-    if (app.isReady()) {
-        startApp();
-    } else {
-        app.once('ready', startApp);
-    }
+  if (app.isReady()) {
+    startApp();
+  } else {
+    app.once('ready', startApp);
+  }
 }
