@@ -1,12 +1,12 @@
 "use strict";
 
-const _Settings = require("../common/Settings");
+const Settings = require("../common/Settings");
 const paths = require("../common/paths");
 
 let settings;
 
 function init() {
-  settings = new _Settings(paths.getUserData());
+  settings = new Settings(paths.root);
 }
 
 function getSettings() {

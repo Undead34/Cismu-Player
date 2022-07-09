@@ -4,7 +4,7 @@
 
 const { app, BrowserWindow } = require('electron');
 const errorHandler = require('./src/app/modules/errorHandler');
-// const appSettings = require('./src/app/modules/appSettings');
+const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
 // const paths = require('./src/app/common/paths');
 const path = require("path")
@@ -13,7 +13,7 @@ const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
 
 errorHandler.init();
-// appSettings.init();
+appSettings.init();
 // paths.init(constants.buildInfo);
 
 
@@ -43,10 +43,7 @@ function startApp() {
             preload: path.join(__dirname, 'preload.js')
         },
     });
-    
-    return new Promise((resolve, reason)=>{
-        resolve(a+b)
-    })
+
     // paths.cleanOldVersions(buildInfo);
 }
 
