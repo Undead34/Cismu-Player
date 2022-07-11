@@ -51,9 +51,9 @@ function startApp() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
-  mainWindow.on("resize", (...args) => {
-    ipcMain.emit("window-resize", ...args);
-  });
+  // mainWindow.on("resize", (...args) => {
+  //   ipcMain.emit("window-resize", ...args);
+  // });
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {
