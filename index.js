@@ -49,7 +49,7 @@ function startApp() {
       preload: path.join(__dirname, 'preload.js')
     },
   });
-
+  
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
   // mainWindow.on("resize", (...args) => {
   //   ipcMain.emit("window:resize", ...args);

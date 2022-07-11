@@ -7,15 +7,17 @@ const path = require("path");
 //       if this is fine, remove this todo
 class Settings {
   constructor(root) {
-    this.path = path.join(root, 'settings.json');
+    this.path = path.join(root, "settings.json");
 
     try {
       this.lastSaved = fs.readFileSync(this.path);
       this.settings = JSON.parse(this.lastSaved);
     } catch (e) {
-      this.lastSaved = '';
+      this.lastSaved = "";
       this.settings = {
-        "enableHardwareAcceleration": true,
+        enableHardwareAcceleration: true,
+        enableLocalFiles: true,
+        localFilePaths: "default",
       };
       this.save();
     }
@@ -45,7 +47,7 @@ class Settings {
 
   save() {
     if (this.lastModified && this.lastModified !== this._lastModified()) {
-      console.warn('Not saving settings, it has been externally modified.');
+      console.warn("Not saving settings, it has been externally modified.");
       return;
     }
 
@@ -60,10 +62,9 @@ class Settings {
         this.lastModified = this._lastModified();
       }
     } catch (err) {
-      console.warn('Failed saving settings with error: ', err);
+      console.warn("Failed saving settings with error: ", err);
     }
   }
-
 }
 
 module.exports = Settings;
