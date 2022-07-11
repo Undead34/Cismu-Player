@@ -5,11 +5,11 @@ contextBridge.exposeInMainWorld("cismu", {
     ipcRenderer.on(channel, (event, ...args) => func(...args));
   },
 
-  send: (channel, data, type = "normal") => {
+  send: (channel, type = "normal", ...args) => {
     if (type === "invoke") {
-      return ipcRenderer.invoke(channel, args);
+      return ipcRenderer.invoke(channel, ...args);
     } else {
-      ipcRenderer.send(channel, data);
+      ipcRenderer.send(channel, ...args);
     }
   },
 });

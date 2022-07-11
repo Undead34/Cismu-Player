@@ -31,7 +31,6 @@ const _mkdirSync = (paths) => {
 
 function init () {
   let folder = _mkdirSync([root]);
-
 }
 
 module.exports = {

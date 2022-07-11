@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-linux": "export NODE_ENV=development && electron .",
-    "start-windows": "set NODE_ENV=development && electron .",
     "start": "electron ."
   },
   "keywords": [],
