@@ -33,7 +33,7 @@ if (!settings.get('enableHardwareAcceleration', true)) {
 
 function startApp() {
   console.log('Starting app.');
-  
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -51,6 +51,10 @@ function startApp() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
+
+  mainWindow.on("resize", (...args) => {
+    ipcMain.emit("window-resize", ...args);
+  });
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {

@@ -4,6 +4,10 @@ const { ipcMain } = require("electron");
 const path = require('path');
 const fs = require("fs");
 
+const emit = (event, ...args) => {
+  ipcMain.emit(event, ...args);
+}
+
 const removeListener = (event) => {
   ipcMain.removeListener(event);
 }
@@ -42,7 +46,7 @@ const init = () => {
   readdir(__dirname, (err, files) => {
     if (err) return err;
     for (let i = 0; i < files.length; i++) {
-      
+
       if (path.parse(files[i]).name === 'ipcMain') continue;
 
       let event = require(files[i]);
@@ -59,5 +63,6 @@ const init = () => {
 module.exports = {
   init,
   removeListener,
-  removeHandler
+  removeHandler,
+  emit
 }
