@@ -2,12 +2,13 @@
 // responsible for handling updates and updating modules before continuing startup
 "use strict";
 
-const { app, BrowserWindow } = require('electron');
-const errorHandler = require('./src/app/modules/errorHandler');
+const { app, BrowserWindow, session } = require('electron');
+const installDevTools = require('./src/app/common/installDevTools');
+const errorHandler = require('./src/app/common/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
-const paths = require('./src/app/common/paths');
 const ipcMain = require('./src/app/events/ipcMain');
+const paths = require('./src/app/common/paths');
 const path = require("path");
 
 
@@ -52,8 +53,12 @@ function startApp() {
 
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
   // mainWindow.on("resize", (...args) => {
-  //   ipcMain.emit("window-resize", ...args);
+  //   ipcMain.emit("window:resize", ...args);
   // });
+
+  if (process.env.NODE_ENV === 'development') {
+    installDevTools(session);
+  }
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {

@@ -1,7 +1,7 @@
 const { BrowserWindow } = require("electron");
 
 module.exports = {
-  name: "window-close",
+  name: "window:close",
   isHandle: false,
   action: (e) => {
     let webContents = e.sender;

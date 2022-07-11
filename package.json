@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "export NODE_ENV=development && electron ."
   },
   "keywords": [],
   "author": "Gabriel Maizo <maizogabriel@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.41",
+    "devtron": "^1.4.0",
     "electron": "^19.0.8",
     "electron-reload": "^2.0.0-alpha.1"
   },

@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("api", {
-
+contextBridge.exposeInMainWorld("cismu", {
   receive: (channel, func) => {
     ipcRenderer.on(channel, (event, ...args) => func(...args));
   },
@@ -14,3 +13,5 @@ contextBridge.exposeInMainWorld("api", {
     }
   },
 });
+
+window.__devtron = {require: require, process: process}

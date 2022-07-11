@@ -1,6 +1,6 @@
 "use strict";
 
-const { handled } = require("../modules/errorHandler");
+const { handled } = require("./errorHandler");
 const { appOptions } = require("./constants");
 const { app } = require("electron");
 const path = require("path");

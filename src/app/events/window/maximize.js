@@ -1,7 +1,7 @@
 const { BrowserWindow } = require("electron");
 
 module.exports = {
-  name: "window-maximize",
+  name: "window:maximize",
   isHandle: false,
   action: (e) => {
     let webContents = e.sender;
