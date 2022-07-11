@@ -1,3 +1,3 @@
 window.onload = () => {
-  window.api.send("window-minimize", null)
+  window.api.send("window-close", null)
 }

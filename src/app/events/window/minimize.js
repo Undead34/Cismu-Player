@@ -1,7 +1,11 @@
+const { BrowserWindow } = require("electron");
+
 module.exports = {
   name: "window-minimize",
   isHandle: false,
   action: (e) => {
-    console.log("Hello World!! window-minimize");
+    let webContents = e.sender;
+    let window = BrowserWindow.fromWebContents(webContents);
+    window.minimize();
   }
 }
