@@ -4,14 +4,6 @@ const { ipcMain } = require("electron");
 const path = require('path');
 const fs = require("fs");
 
-const on = (event, callback) => {
-  ipcMain.on(event, callback)
-}
-
-const onHandle = (event, callback) => {
-  ipcMain.handle(event, callback)
-}
-
 const removeListener = (event) => {
   ipcMain.removeListener(event);
 }
@@ -21,39 +13,46 @@ const removeHandler = (event) => {
 }
 
 const readdir = (folder, callback) => {
-  let results = [];
+  try {
+    let results = [];
 
-  fs.readdir(folder, (err, list) => {
-    if (err) return callback(err);
+    let list = fs.readdirSync(folder);
 
     for (let i = 0; i < list.length; i++) {
       let filePath = path.join(folder, list[i]);
-      
-      if (!filePath) return callback(null, results);
+      let stat = fs.statSync(filePath)
 
-      fs.stat(filePath, (err, stat) => {
-        if (err) return callback(err);
-        
-        if (stat && stat.isDirectory()) {
-          readdir(filePath, function (err, res) {
-            if (err) return false;
-            results = results.concat(res);
-          });
-        } else {
-          results.push(filePath);
-        }
-      });
+      if (stat && stat.isDirectory()) {
+        readdir(filePath, function (err, res) {
+          if (err) return false;
+          results = results.concat(res);
+        });
+      } else {
+        results.push(filePath);
+      }
     }
-  });
 
-  callback(null, results);
+    callback(null, results);
+  } catch (error) {
+    callback(error, null);
+  }
 }
 
 const init = () => {
-  let folder = __dirname;
+  readdir(__dirname, (err, files) => {
+    if (err) return err;
+    for (let i = 0; i < files.length; i++) {
+      
+      if (path.parse(files[i]).name === 'ipcMain') continue;
 
-  readdir(folder, (err, files) => {
-    console.log(files)
+      let event = require(files[i]);
+
+      if (event.isHandle) {
+        ipcMain.handle(event.name, event.action);
+      } else {
+        ipcMain.on(event.name, event.action);
+      }
+    }
   });
 }
 
