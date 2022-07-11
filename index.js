@@ -3,7 +3,6 @@
 "use strict";
 
 const { app, BrowserWindow, session } = require('electron');
-const installDevTools = require('./src/app/common/installDevTools');
 const errorHandler = require('./src/app/common/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
@@ -55,10 +54,6 @@ function startApp() {
   // mainWindow.on("resize", (...args) => {
   //   ipcMain.emit("window:resize", ...args);
   // });
-
-  if (process.env.NODE_ENV === 'development') {
-    installDevTools(session);
-  }
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {
