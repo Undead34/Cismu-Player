@@ -7,19 +7,20 @@ const errorHandler = require('./src/app/modules/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
 const paths = require('./src/app/common/paths');
+const ipcMain = require('./src/app/events/ipcMain');
 const path = require("path");
 
-let mainWindow;
-
-errorHandler.init();
 
 const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
+let mainWindow;
 
+errorHandler.init();
+ipcMain.init();
 paths.init();
 global.appPaths = paths.getPath;
-appSettings.init(paths.getPath.root);
 
+appSettings.init(paths.getPath.root);
 const settings = appSettings.getSettings();
 
 if (!settings.get('enableHardwareAcceleration', true)) {
@@ -49,15 +50,15 @@ function startApp() {
     },
   });
 
-  mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"))
+  mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
 }
 
 app.on('second-instance', (_event, args, _workingDirectory) => {
-  console.log("Jaja")
+  console.log("Jaja");
 });
 
 app.on('will-finish-launching', () => {
-  console.log("Electron is Awesome!!!")
+  console.log("Electron is Awesome!!!");
 });
 
 console.log(`${constants.appOptions.appName} ${app.getVersion()}`);
