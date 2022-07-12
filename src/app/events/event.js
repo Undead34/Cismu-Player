@@ -1,6 +1,6 @@
 "use strict";
 
-const { ipcMain } = require("electron");
+const { ipcMain, app } = require("electron");
 const path = require('path');
 const fs = require("fs");
 
@@ -34,36 +34,40 @@ const init = () => {
   readdir(__dirname, (err, files) => {
     if (err) return err;
 
-    for (let i = 0; i < files.length; i++) {
+    try {
+      for (let i = 0; i < files.length; i++) {
 
-      if (path.parse(files[i]).name === 'event') continue;
-
-      let event = require(files[i]);
-
-      if (event.isIPCMain) {
-        if (event.once) {
-          if (event.isHandle) {
-            ipcMain.handleOnce(event.name, event.action);
+        if (path.parse(files[i]).name === 'event') continue;
+  
+        let event = require(files[i]);
+  
+        if (event.isIPCMain) {
+          if (event.once) {
+            if (event.isHandle) {
+              ipcMain.handleOnce(event.name, event.action);
+            } else {
+              ipcMain.once(event.name, event.action);
+            }
           } else {
-            ipcMain.once(event.name, event.action);
+            if (event.isHandle) {
+              ipcMain.handle(event.name, event.action);
+            } else {
+              ipcMain.on(event.name, event.action);
+            }
           }
         } else {
-          if (event.isHandle) {
-            ipcMain.handle(event.name, event.action);
-          } else {
-            ipcMain.on(event.name, event.action);
+          if (event.once) {
+            app.once(event.name, event.action);
+            if (event.autostart) app.emit(event.name);
+          }
+          else {
+            app.on(event.name, event.action);
+            if (event.autostart) app.emit(event.name);
           }
         }
-      } else {
-        if (event.once) {
-          global.app.once(event.name, event.action);
-          if (event.autostart) global.app.emit(event.name);
-        }
-        else {
-          global.app.on(event.name, event.action);
-          if (event.autostart) global.app.emit(event.name);
-        }
       }
+    } catch (error) {
+      console.log(error)
     }
   });
 }

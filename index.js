@@ -11,7 +11,7 @@ const event = require('./src/app/events/event');
 const path = require("path");
 
 
-const isFirstInstance = app.requestSingleInstanceLock(); 
+const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
 let mainWindow;
 
@@ -52,18 +52,13 @@ function startApp() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
-  // mainWindow.on("resize", (...args) => {
-  //   ipcMain.emit("window:resize", ...args);
-  // });
 }
 
-app.on('second-instance', (_event, args, _workingDirectory) => {
-  console.log("Jaja");
+app.on('second-instance', () => {
+  if (mainWindow) { mainWindow.show(); }
 });
 
-app.on('will-finish-launching', () => {
-  console.log("Electron is Awesome!!!");
-});
+app.on('will-finish-launching', e => console.log("Electron is Awesome!!!"));
 
 console.log(`${constants.appOptions.appName} ${app.getVersion()}`);
 
