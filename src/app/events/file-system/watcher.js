@@ -1,17 +1,13 @@
 const fs = require("fs");
+const { getSettings } = require("../../modules/appSettings");
 
 module.exports = {
   name: "file-system:watcher",
   isHandle: false,
-  isIPCMain: true,
+  isIPCMain: false,
   once: false,
-  autostart: true,
+  autostart: false,
   action: () => {
-    // detect changes in music folder
-    let watcher = fs.watch(global.appPaths.music, { recursive: true });
-
-    watcher.on("change", (eventType, filename) => {
-      global.app.emit("renderer:load-local-sounds", [filename, eventType]);
-    });
+    console.log();
   },
 };

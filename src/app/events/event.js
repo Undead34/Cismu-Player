@@ -4,18 +4,6 @@ const { ipcMain } = require("electron");
 const path = require('path');
 const fs = require("fs");
 
-const emit = (event, ...args) => {
-  ipcMain.emit(event, ...args);
-}
-
-const removeListener = (event) => {
-  ipcMain.removeListener(event);
-}
-
-const removeHandler = (event) => {
-  ipcMain.removeHandler(event);
-}
-
 const readdir = (folder, callback) => {
   try {
     let results = [];
@@ -45,24 +33,51 @@ const readdir = (folder, callback) => {
 const init = () => {
   readdir(__dirname, (err, files) => {
     if (err) return err;
+
     for (let i = 0; i < files.length; i++) {
 
-      if (path.parse(files[i]).name === 'ipcMain') continue;
+      if (path.parse(files[i]).name === 'event') continue;
 
       let event = require(files[i]);
 
-      if (event.isHandle) {
-        ipcMain.handle(event.name, event.action);
+      if (event.isIPCMain) {
+        if (event.once) {
+          if (event.isHandle) {
+            ipcMain.handleOnce(event.name, event.action);
+          } else {
+            ipcMain.once(event.name, event.action);
+          }
+        } else {
+          if (event.isHandle) {
+            ipcMain.handle(event.name, event.action);
+          } else {
+            ipcMain.on(event.name, event.action);
+          }
+        }
       } else {
-        ipcMain.on(event.name, event.action);
+        if (event.once) {
+          global.app.once(event.name, event.action);
+          if (event.autostart) global.app.emit(event.name);
+        }
+        else {
+          global.app.on(event.name, event.action);
+          if (event.autostart) global.app.emit(event.name);
+        }
       }
     }
   });
+}
+
+const removeListener = (event) => {
+  ipcMain.removeListener(event);
+}
+
+const removeHandler = (event) => {
+  ipcMain.removeHandler(event);
 }
 
 module.exports = {
   init,
   removeListener,
   removeHandler,
-  emit
 }

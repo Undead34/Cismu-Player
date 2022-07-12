@@ -30,7 +30,12 @@ const _mkdirSync = (paths) => {
 }
 
 function init () {
-  let folder = _mkdirSync([root]);
+  let folders = [
+    root,
+    process.platform === "linux" ? path.join(music, appOptions.appName) : music
+  ];
+
+  let folder = _mkdirSync(folders);
 }
 
 module.exports = {

@@ -2,28 +2,29 @@
 // responsible for handling updates and updating modules before continuing startup
 "use strict";
 
-const { app, BrowserWindow, session } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const errorHandler = require('./src/app/common/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
-const ipcMain = require('./src/app/events/ipcMain');
 const paths = require('./src/app/common/paths');
+const event = require('./src/app/events/event');
 const path = require("path");
 
 
-const isFirstInstance = app.requestSingleInstanceLock();
+const isFirstInstance = app.requestSingleInstanceLock(); 
 app.setVersion(constants.buildInfo.version);
 let mainWindow;
 
 errorHandler.init();
-ipcMain.init();
 paths.init();
+event.init();
+
+appSettings.init(path.join(app.getPath("appData"), constants.appOptions.appName));
+
+global.settings = appSettings.getSettings();
 global.appPaths = paths.getPath;
 
-appSettings.init(paths.getPath.root);
-const settings = appSettings.getSettings();
-
-if (!settings.get('enableHardwareAcceleration', true)) {
+if (!global.settings.get('enableHardwareAcceleration', true)) {
   console.log(`
 ##################################################################
 # Hardware acceleration is disabled, this may affect performance #
@@ -49,7 +50,7 @@ function startApp() {
       preload: path.join(__dirname, 'preload.js')
     },
   });
-  
+
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
   // mainWindow.on("resize", (...args) => {
   //   ipcMain.emit("window:resize", ...args);
