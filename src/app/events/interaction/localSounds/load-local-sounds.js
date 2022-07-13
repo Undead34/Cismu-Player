@@ -10,11 +10,10 @@ module.exports = {
   autostart: false,
   action: async (e) => {
     let db = new Database(global.appPaths.dbPath);
-    // let musics = await db.getAllMusics();
-    // db.closeDatabase();
+    let musics = await db.getAllMusics();
+    db.closeDatabase();
 
-    return false;
-    // return musics;
+    return musics;
   }
 }
 
