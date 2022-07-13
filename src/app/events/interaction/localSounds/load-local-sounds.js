@@ -1,5 +1,5 @@
 const Database = require("../../../modules/database/database");
-const { randomUUID } = require("crypto");
+// const { randomUUID } = require("crypto");
 
 module.exports = {
   name: "localSounds:get-local-sounds",
@@ -8,16 +8,11 @@ module.exports = {
   once: false,
   autostart: false,
   action: async (e) => {
-    try {
-      let db = new Database(global.appPaths.dbPath);
-      let musics = await db.getAllMusics();
-      db.closeDatabase();
+    let db = new Database(global.appPaths.dbPath);
+    let musics = await db.getAllMusics();
+    db.closeDatabase();
 
-      return musics;
-    } catch (error) {
-      console.log("err")
-      console.log(err.code)
-    }
+    return musics;
   }
 }
 

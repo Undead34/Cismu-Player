@@ -10,6 +10,7 @@ const fs = require("fs");
 let root = path.join(app.getPath("appData"), appOptions.appName),
 appData = app.getPath("appData"),
 music = app.getPath("music"),
+useMusic = process.platform === "linux" ? path.join(music, appOptions.appName) : app.getPath("music"),
 videos = app.getPath("videos"),
 home = app.getPath("home"),
 exe = app.getPath("exe"),
@@ -34,7 +35,7 @@ const _mkdirSync = (paths) => {
 function init () {
   let folders = [
     root,
-    process.platform === "linux" ? path.join(music, appOptions.appName) : music
+    useMusic
   ];
 
   let folder = _mkdirSync(folders);
@@ -56,6 +57,7 @@ module.exports = {
     videos,
     home,
     exe,
-    dbPath
+    dbPath,
+    useMusic
   }
 }
