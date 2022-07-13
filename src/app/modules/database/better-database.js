@@ -1,10 +1,15 @@
 const sqlite3 = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
 class Database {
   constructor(dbName) {
     this.db = new sqlite3(dbName, { verbose: console.log });
-    this.db.loadExtension(path.join(__dirname, "extensions/uuid.so"));
+    let uuidPath = "extensions/uuid." + process.platform === "win32" ? "dll" : process.platform === "linux" ? "so" : "dylib";
+    this.db.loadExtension(path.join(__dirname, uuidPath));
+    const migration = fs.readFileSync(path.join(__dirname, "database.sql"), 'utf8');
+    this.db.exec(migration)
+    this.db.exec("INSERT INTO UUID_TABLE (id, name) VALUES (NULL, 'REEEELOCOOOO')")
   }
 
   createDatabase = async () => {

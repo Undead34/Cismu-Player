@@ -23,7 +23,6 @@
     "ffmpeg": "0.0.4",
     "get-mp3-duration": "^1.0.0",
     "jsmediatags": "^3.9.7",
-    "mp3tag.js": "^3.3.0",
-    "sqlite3": "^5.0.8"
+    "mp3tag.js": "^3.3.0"
   }
 }
