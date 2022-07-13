@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
   },
   "keywords": [],
   "author": "Gabriel Maizo <maizogabriel@gmail.com>",
@@ -12,10 +13,12 @@
   "devDependencies": {
     "@types/node": "^17.0.41",
     "electron": "^19.0.8",
+    "electron-rebuild": "^3.2.8",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "better-sqlite3": "^7.6.0",
     "electron-is-dev": "^2.0.0",
     "ffmpeg": "0.0.4",
     "get-mp3-duration": "^1.0.0",

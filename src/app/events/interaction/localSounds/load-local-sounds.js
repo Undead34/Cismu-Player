@@ -1,4 +1,5 @@
-const Database = require("../../../modules/database/database");
+const Database = require("../../../modules/database/better-database");
+// const Database = require("../../../modules/database/database");
 // const { randomUUID } = require("crypto");
 
 module.exports = {
@@ -9,10 +10,11 @@ module.exports = {
   autostart: false,
   action: async (e) => {
     let db = new Database(global.appPaths.dbPath);
-    let musics = await db.getAllMusics();
-    db.closeDatabase();
+    // let musics = await db.getAllMusics();
+    // db.closeDatabase();
 
-    return musics;
+    return false;
+    // return musics;
   }
 }
 

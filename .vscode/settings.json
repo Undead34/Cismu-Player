@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "sqlite3ext.h": "c",
+    "sqlite3.h": "c",
+    "string.h": "c"
+  }
+}
