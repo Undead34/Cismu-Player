@@ -1,6 +1,7 @@
 "use strict";
 
 const { handled } = require("./errorHandler");
+const Database = require("../modules/database/database");
 const { appOptions } = require("./constants");
 const { app } = require("electron");
 const path = require("path");
@@ -11,7 +12,8 @@ appData = app.getPath("appData"),
 music = app.getPath("music"),
 videos = app.getPath("videos"),
 home = app.getPath("home"),
-exe = app.getPath("exe")
+exe = app.getPath("exe"),
+dbPath = path.join(path.join(app.getPath("appData"), appOptions.appName), appOptions.appName + ".db");
 
 const _mkdirSync = (paths) => {
   try {
@@ -36,6 +38,13 @@ function init () {
   ];
 
   let folder = _mkdirSync(folders);
+
+  if (folder) {
+    let db = new Database(dbPath);
+    db.createDatabase().then(()=>{
+      db.closeDatabase();
+    });
+  }
 }
 
 module.exports = {
@@ -47,5 +56,6 @@ module.exports = {
     videos,
     home,
     exe,
+    dbPath
   }
 }

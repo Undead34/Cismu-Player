@@ -1,6 +1,5 @@
 const Database = require("../../../modules/database/database");
-const { appOptions } = require('../../../common/constants');
-const path = require("path");
+const { randomUUID } = require("crypto");
 
 module.exports = {
   name: "localSounds:get-local-sounds",
@@ -9,13 +8,25 @@ module.exports = {
   once: false,
   autostart: false,
   action: async (e) => {
-    let dbPath = path.join(global.appPaths.root, appOptions.appName);
-    let db = new Database(dbPath);
+    try {
+      let db = new Database(global.appPaths.dbPath);
+      let musics = await db.getAllMusics();
+      db.closeDatabase();
 
-    let musics = db.getAllMusics();
-
-    db.closeDatabase();
-
-    return musics;
+      return musics;
+    } catch (error) {
+      console.log("err")
+      console.log(err.code)
+    }
   }
 }
+
+// await db.insertMusic({
+//   id: await randomUUID(),
+//   name: "Lolo",
+//   path: "New Para",
+//   type: "sad",
+//   picture: null,
+//   tags: "Jaja",
+//   hash: "1290389jda89d89asj",
+// });
