@@ -1,7 +1,7 @@
 "use strict";
 
 const { handled } = require("./errorHandler");
-const Database = require("../../../src/app/modules/database/better-database"); // const Database = require("../modules/database/database");
+const Database = require("./database/better-database"); // const Database = require("../modules/database/database");
 const { appOptions } = require("./constants");
 const { app } = require("electron");
 const path = require("path");
@@ -39,13 +39,6 @@ function init () {
   ];
 
   let folder = _mkdirSync(folders);
-
-  if (folder) {
-    let db = new Database(dbPath);
-    db.createDatabase().then(()=>{
-      db.closeDatabase();
-    });
-  }
 }
 
 module.exports = {

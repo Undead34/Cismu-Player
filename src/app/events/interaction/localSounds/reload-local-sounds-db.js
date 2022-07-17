@@ -19,6 +19,7 @@ module.exports = {
       console.time("t1")
       await db.insertMusic(musicsFiles);
       console.timeEnd("t1")
+      console.log(`${musicsFiles.length} songs scanned in:`)
       
       let musics = await db.getAllMusics();
 

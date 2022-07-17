@@ -1,15 +1,13 @@
-// index, or what runs before the rest of desktop does
-// responsible for handling updates and updating modules before continuing startup
 "use strict";
 
 const { app, BrowserWindow } = require('electron');
+const Database = require('./src/app/common/database/better-database');
 const errorHandler = require('./src/app/common/errorHandler');
 const appSettings = require('./src/app/modules/appSettings');
 const constants = require('./src/app/common/constants');
 const paths = require('./src/app/common/paths');
 const event = require('./src/app/events/event');
 const path = require("path");
-
 
 const isFirstInstance = app.requestSingleInstanceLock();
 app.setVersion(constants.buildInfo.version);
@@ -23,6 +21,12 @@ appSettings.init(path.join(app.getPath("appData"), constants.appOptions.appName)
 
 global.settings = appSettings.getSettings();
 global.appPaths = paths.getPath;
+
+global.database = {
+  databaseStatus: "open", // ["open", "closed", "error"]
+  database: new Database(appPaths.dbPath)
+}
+
 
 if (!global.settings.get('enableHardwareAcceleration', true)) {
   console.log(`
