@@ -1,6 +1,8 @@
 "use strict";
 
 const electron = require("electron");
+const fs = require("fs");
+const path = require("path");
 
 const HANDLED_ERROR_LIMIT = 10;
 let totalHandledErrors = 0;
@@ -11,12 +13,22 @@ function isErrorSafeToSuppress(error) {
 
 function init() {
   process.on('uncaughtException', error => {
-    const stack = error.stack ? error.stack : String(error);
-    const message = `Uncaught exception:\n ${stack}`;
-    console.warn(message);
+    try {
+      const stack = error.stack ? error.stack : String(error);
+      const message = `Uncaught exception:\n ${stack}`;
+      console.warn(message);
 
-    if (!isErrorSafeToSuppress(error)) {
-      electron.dialog.showErrorBox('A JavaScript error occurred in the main process', message);
+      let datelog = new Date().toLocaleDateString();
+      datelog = datelog.split("/").join("-");
+      datelog = datelog + "-" + parseInt(Math.random() * 10000);
+
+      fs.writeFileSync(path.join(global.paths.logs, datelog + ".log"), message);
+
+      if (!isErrorSafeToSuppress(error)) {
+        electron.dialog.showErrorBox('A JavaScript error occurred in the main process', message + "\n\nCheck the logs folder: " + path.join(global.paths.logs, datelog));
+      }
+    } catch (error) {
+      electron.app.quit();
     }
   });
 } // show a similar error message to the error handler, except exit out the app
@@ -39,7 +51,7 @@ function fatal(err) {
   } else {
     electron.dialog.showMessageBox(options, callback);
   }
-} // capture a handled error for telemetry purposes, e.g. finding update loops.
+}
 
 
 function handled(err) {
@@ -47,7 +59,7 @@ function handled(err) {
     console.warn('Reporting non-fatal error', err);
     totalHandledErrors++;
   }
-  
+
   console.log("Number of errors handled: " + totalHandledErrors);
 }
 

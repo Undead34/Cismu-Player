@@ -1,9 +1,9 @@
 "use strict";
 
 const { app, BrowserWindow } = require('electron');
-const Bootstrap = require("./src/app/common/bootstrap");
-const errorHandler = require('./src/app/common/errorHandler');
-const event = require('./src/app/events/event');
+const Bootstrap = require("./app/common/bootstrap");
+const errorHandler = require('./app/common/errorHandler');
+const event = require('./app/events/event');
 const path = require("path");
 
 const bootstrap = new Bootstrap();
@@ -47,14 +47,14 @@ const startApp = () => {
     },
   });
 
-  mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
+  mainWindow.loadFile(path.join(__dirname, "src/index.html"));
 }
 
 app.on('second-instance', () => {
-  if (mainWindow) { mainWindow.show(); }
+  if (mainWindow) mainWindow.show();
 });
 
-app.on('will-finish-launching', e => console.log("Electron is Awesome!!!"));
+// app.on('will-finish-launching', e => console.log("Electron is Awesome!!!"));
 
 console.log("Cismu Player | 0.0.1");
 
