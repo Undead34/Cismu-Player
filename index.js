@@ -18,7 +18,7 @@ const isFirstInstance = app.requestSingleInstanceLock();
 let mainWindow;
 
 errorHandler.init();
-// event.init();
+event.init();
 
 if (!global.settings["enableHardwareAcceleration"]) {
   console.log(`
@@ -50,21 +50,21 @@ const startApp = () => {
   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
 }
 
-// app.on('second-instance', () => {
-//   if (mainWindow) { mainWindow.show(); }
-// });
+app.on('second-instance', () => {
+  if (mainWindow) { mainWindow.show(); }
+});
 
-// app.on('will-finish-launching', e => console.log("Electron is Awesome!!!"));
+app.on('will-finish-launching', e => console.log("Electron is Awesome!!!"));
 
-// console.log(`${constants.appOptions.appName} ${app.getVersion()}`);
+console.log("Cismu Player | 0.0.1");
 
-// if (!isFirstInstance) {
-//   console.log('Quitting secondary instance.');
-//   app.quit();
-// } else {
-//   if (app.isReady()) {
-//     startApp();
-//   } else {
-//     app.once('ready', startApp);
-//   }
-// }
+if (!isFirstInstance) {
+  console.log('Quitting secondary instance.');
+  app.quit();
+} else {
+  if (app.isReady()) {
+    startApp();
+  } else {
+    app.once('ready', startApp);
+  }
+}

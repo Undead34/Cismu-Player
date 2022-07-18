@@ -43,7 +43,6 @@ module.exports = class Bootstrap {
       global.settings = this.settings;
       global.paths = this.paths;
       global.database = {
-        dbStatus: "open",
         db: new Database(this.paths.database)
       }
       return true;
@@ -54,7 +53,6 @@ module.exports = class Bootstrap {
       global.settings = this.settings;
       global.paths = this.paths;
       global.database = {
-        dbStatus: "open",
         db: new Database(this.paths.database)
       }
 

@@ -1,6 +1,4 @@
-const Database = require("../../../modules/database/better-database");
-// const Database = require("../../../modules/database/database");
-// const { randomUUID } = require("crypto");
+const Database = require("../../../common/database/better-database");
 
 module.exports = {
   name: "localSounds:get-local-sounds",
@@ -9,20 +7,12 @@ module.exports = {
   once: false,
   autostart: false,
   action: async (e) => {
-    let db = new Database(global.appPaths.dbPath);
-    let musics = await db.getAllMusics();
-    db.closeDatabase();
+    let database = global.database.db;
+    if (!database.db.open) {
+      global.database.db = new Database(this.paths.database);
+      database = global.database.db;
+    }
 
-    return musics;
+    return await database.getAllMusics();
   }
 }
-
-// await db.insertMusic({
-//   id: await randomUUID(),
-//   name: "Lolo",
-//   path: "New Para",
-//   type: "sad",
-//   picture: null,
-//   tags: "Jaja",
-//   hash: "1290389jda89d89asj",
-// });
