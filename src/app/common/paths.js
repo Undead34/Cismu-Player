@@ -1,20 +1,65 @@
 "use strict";
 
-const { handled } = require("./errorHandler");
-const Database = require("./database/better-database"); // const Database = require("../modules/database/database");
-const { appOptions } = require("./constants");
 const { app } = require("electron");
 const path = require("path");
-const fs = require("fs");
 
+const win32 = () => {
+  let appdata = app.getPath("appData");
+  let home = path.join(appdata, "Cismu Player");
+
+  return {
+    home,
+    music: app.getPath("music"),
+    logs: path.join(home, "logs"),
+    database: path.join(home, "database.db"),
+    firstRun: path.join(home, ".firstRun")
+  }
+}
+
+const linux = () => {
+  let appdata = app.getPath("appData");
+  let home = path.join(appdata, "Cismu Player");
+
+  return {
+    home,
+    music: app.getPath("music"),
+    logs: path.join(home, "logs"),
+    database: path.join(home, "database.db"),
+    firstRun: path.join(home, ".firstRun")
+  }
+}
+
+const darwin = () => {
+  let appdata = app.getPath("appData");
+  let home = path.join(appdata, "Cismu Player");
+
+  return {
+    home,
+    music: app.getPath("music"),
+    logs: path.join(home, "logs"),
+    database: path.join(home, "database.db"),
+    firstRun: path.join(home, ".firstRun")
+  }
+}
+
+module.exports = {
+  win32,
+  linux,
+  darwin
+}
+
+
+
+/*
 let root = path.join(app.getPath("appData"), appOptions.appName),
-appData = app.getPath("appData"),
-music = app.getPath("music"),
-useMusic = process.platform === "linux" ? path.join(music, appOptions.appName) : app.getPath("music"),
-videos = app.getPath("videos"),
-home = app.getPath("home"),
-exe = app.getPath("exe"),
-dbPath = path.join(path.join(app.getPath("appData"), appOptions.appName), appOptions.appName + ".db");
+  appData = app.getPath("appData"),
+  music = app.getPath("music"),
+  useMusic = process.platform === "linux" ? path.join(music, appOptions.appName) : app.getPath("music"),
+  videos = app.getPath("videos"),
+  home = app.getPath("home"),
+  exe = app.getPath("exe"),
+  dbPath = path.join(path.join(app.getPath("appData"), appOptions.appName), appOptions.appName + ".db");
+
 
 const _mkdirSync = (paths) => {
   try {
@@ -32,7 +77,7 @@ const _mkdirSync = (paths) => {
   }
 }
 
-function init () {
+function init() {
   let folders = [
     root,
     useMusic
@@ -54,3 +99,5 @@ module.exports = {
     useMusic
   }
 }
+
+*/
