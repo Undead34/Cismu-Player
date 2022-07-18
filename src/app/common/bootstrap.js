@@ -41,6 +41,7 @@ module.exports = class Bootstrap {
     if (this.checkFirstRun()) {
       this.firstRun();
       global.settings = this.settings;
+      global.paths = this.paths;
       global.database = {
         dbStatus: "open",
         db: new Database(this.paths.database)
@@ -51,7 +52,7 @@ module.exports = class Bootstrap {
       this.settings = settings.settings;
 
       global.settings = this.settings;
-
+      global.paths = this.paths;
       global.database = {
         dbStatus: "open",
         db: new Database(this.paths.database)

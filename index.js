@@ -4,6 +4,7 @@ const { app, BrowserWindow } = require('electron');
 const Bootstrap = require("./src/app/common/bootstrap");
 const errorHandler = require('./src/app/common/errorHandler');
 const event = require('./src/app/events/event');
+const path = require("path");
 
 const bootstrap = new Bootstrap();
 let bootResults = bootstrap.start();
@@ -13,64 +14,41 @@ if (!bootResults) {
   app.quit();
 }
 
-// errorHandler.init();
+const isFirstInstance = app.requestSingleInstanceLock();
+let mainWindow;
+
+errorHandler.init();
 // event.init();
 
-console.log(global.settings);
+if (!global.settings["enableHardwareAcceleration"]) {
+  console.log(`
+##################################################################
+# Hardware acceleration is disabled, this may affect performance #
+##################################################################\n`);
+  app.disableHardwareAcceleration();
+}
 
-// const appSettings = require('./src/app/modules/appSettings');
-// const constants = require('./src/app/common/constants');
-// const paths = require('./src/app/common/paths');
-// const event = require('./src/app/events/event');
-// const path = require("path");
+const startApp = () => {
+  console.log('Starting app.');
 
-// const isFirstInstance = app.requestSingleInstanceLock();
-// app.setVersion(constants.buildInfo.version);
-// let mainWindow;
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: true,
+    frame: true,
+    minHeight: 430,
+    minWidth: 580,
+    title: "Cismu Player",
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'preload.js')
+    },
+  });
 
-// errorHandler.init();
-// event.init();
-
-// appSettings.init(path.join(app.getPath("appData"), constants.appOptions.appName));
-
-// global.settings = appSettings.getSettings();
-// global.appPaths = paths.getPath;
-
-// global.database = {
-//   databaseStatus: "open", // ["open", "closed", "error"]
-//   database: new Database(appPaths.dbPath)
-// }
-
-
-// if (!global.settings.get('enableHardwareAcceleration', true)) {
-//   console.log(`
-// ##################################################################
-// # Hardware acceleration is disabled, this may affect performance #
-// ##################################################################\n`);
-//   app.disableHardwareAcceleration();
-// }
-
-// function startApp() {
-//   console.log('Starting app.');
-
-//   mainWindow = new BrowserWindow({
-//     width: 800,
-//     height: 600,
-//     show: true,
-//     frame: false,
-//     minHeight: 430,
-//     minWidth: 580,
-//     title: constants.appOptions.appName,
-//     webPreferences: {
-//       nodeIntegration: false,
-//       contextIsolation: true,
-//       enableRemoteModule: false,
-//       preload: path.join(__dirname, 'preload.js')
-//     },
-//   });
-
-//   mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
-// }
+  mainWindow.loadFile(path.join(__dirname, "src/assets/index.html"));
+}
 
 // app.on('second-instance', () => {
 //   if (mainWindow) { mainWindow.show(); }
