@@ -10,8 +10,8 @@ class Database {
   }
 
   createDatabase = async () => {
-    const migration = fs.readFileSync(path.join(__dirname, "database.sql"), 'utf8');
-    this.db.exec(migration);
+    const migration = await fs.readFileSync(path.join(__dirname, "database.sql"), 'utf8');
+    await this.db.exec(migration);
     return true;
   }
 

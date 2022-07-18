@@ -1,14 +1,23 @@
 "use strict";
 
 const { app, BrowserWindow } = require('electron');
-const Bootstrap = require("./src/app/common/bootstrap")
+const Bootstrap = require("./src/app/common/bootstrap");
+const errorHandler = require('./src/app/common/errorHandler');
+const event = require('./src/app/events/event');
 
 const bootstrap = new Bootstrap();
+let bootResults = bootstrap.start();
 
-console.log(bootstrap.start());
+if (!bootResults) {
+  console.log("An unknown boot error has occurred");
+  app.quit();
+}
 
-// const Database = require('./src/app/common/database/better-database');
-// const errorHandler = require('./src/app/common/errorHandler');
+// errorHandler.init();
+// event.init();
+
+console.log(global.settings);
+
 // const appSettings = require('./src/app/modules/appSettings');
 // const constants = require('./src/app/common/constants');
 // const paths = require('./src/app/common/paths');
@@ -20,7 +29,6 @@ console.log(bootstrap.start());
 // let mainWindow;
 
 // errorHandler.init();
-// paths.init();
 // event.init();
 
 // appSettings.init(path.join(app.getPath("appData"), constants.appOptions.appName));

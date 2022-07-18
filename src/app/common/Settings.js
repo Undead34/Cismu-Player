@@ -1,16 +1,13 @@
 "use strict";
 
 const fs = require("fs");
-const path = require("path");
 
-// TODO: sync fs operations could cause slowdown and/or freezes, depending on usage
-//       if this is fine, remove this todo
 class Settings {
-  constructor(root) {
-    this.path = path.join(root, "settings.json");
+  constructor(settingsPath) {
+    this.settingsPath = settingsPath;
 
     try {
-      this.lastSaved = fs.readFileSync(this.path);
+      this.lastSaved = fs.readFileSync(this.settingsPath);
       this.settings = JSON.parse(this.lastSaved);
     } catch (e) {
       this.lastSaved = "";
@@ -27,7 +24,7 @@ class Settings {
 
   _lastModified() {
     try {
-      return fs.statSync(this.path).mtime.getTime();
+      return fs.statSync(this.settingsPath).mtime.getTime();
     } catch (e) {
       return 0;
     }
@@ -56,8 +53,7 @@ class Settings {
 
       if (this.lastSaved != toSave) {
         this.lastSaved = toSave;
-
-        fs.writeFileSync(this.path, toSave);
+        fs.writeFileSync(this.settingsPath, toSave);
 
         this.lastModified = this._lastModified();
       }

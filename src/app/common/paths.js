@@ -12,6 +12,7 @@ const win32 = () => {
     music: app.getPath("music"),
     logs: path.join(home, "logs"),
     database: path.join(home, "database.db"),
+    settings: path.join(home, "settings.json"),
     firstRun: path.join(home, ".firstRun")
   }
 }
@@ -25,6 +26,7 @@ const linux = () => {
     music: app.getPath("music"),
     logs: path.join(home, "logs"),
     database: path.join(home, "database.db"),
+    settings: path.join(home, "settings.json"),
     firstRun: path.join(home, ".firstRun")
   }
 }
@@ -38,6 +40,7 @@ const darwin = () => {
     music: app.getPath("music"),
     logs: path.join(home, "logs"),
     database: path.join(home, "database.db"),
+    settings: path.join(home, "settings.json"),
     firstRun: path.join(home, ".firstRun")
   }
 }
